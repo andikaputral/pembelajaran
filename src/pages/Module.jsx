@@ -1,168 +1,207 @@
-import { useState } from "react";
-import { modules } from "../data/modules";
+import { useState, useEffect } from "react";
+import { mapel } from "../data/modules";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export function Module() {
-// State to manage the current view: 'modules' or 'lessonsAndDetail'
-  const [currentView, setCurrentView] = useState('modules');
-  // State to store the currently selected module
-  const [selectedModule, setSelectedModule] = useState(null);
-  // State to store the currently selected lesson
-  const [selectedLesson, setSelectedLesson] = useState(null);
-  // State to control sidebar visibility on smaller screens
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+// State to manage the current page view: 'classList' or 'classDetail'
+  const [currentPage, setCurrentPage] = useState('classList');
+  // State to store the currently selected class object
+  const [selectedClass, setSelectedClass] = useState(null);
 
-  // Handler for selecting a module
-  const handleModuleSelect = (module) => {
-    setSelectedModule(module);
-    // Automatically select the first lesson of the module
-    setSelectedLesson(module.lessons[0] || null);
-    setCurrentView('lessonsAndDetail');
-    setIsSidebarOpen(true); // Open sidebar on module selection for mobile
+  /**
+   * Handles the selection of a class.
+   * Sets the selected class and changes the page to 'classDetail'.
+   * @param {object} classItem - The class object that was clicked.
+   */
+  const handleSelectClass = (classItem) => {
+    setSelectedClass(classItem);
+    setCurrentPage('classDetail');
   };
 
-  // Handler for selecting a lesson from the sidebar
-  const handleLessonSelect = (lesson) => {
-    setSelectedLesson(lesson);
-    setIsSidebarOpen(false); // Close sidebar after selecting a lesson on mobile
-  };
-
-  // Handler for navigating back to modules list
-  const handleBackToModules = () => {
-    setCurrentView('modules');
-    setSelectedModule(null);
-    setSelectedLesson(null);
-    setIsSidebarOpen(false);
+  /**
+   * Handles navigating back to the class list.
+   * Resets selected class and changes the page to 'classList'.
+   */
+  const handleBackToClasses = () => {
+    setSelectedClass(null);
+    setCurrentPage('classList');
   };
 
   return (
-    <>
-      {/* Navigation Buttons */}
-      <nav className="flex justify-start mb-6">
-        {currentView === 'lessonsAndDetail' && (
-          <button
-            onClick={handleBackToModules}
-            className="flex items-center px-4 py-2 bg-indigo-500 text-white rounded-lg shadow-md hover:bg-indigo-600 transition-all duration-300 mr-2"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            Back to Modules
-          </button>
-        )}
-        {currentView === 'lessonsAndDetail' && (
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="md:hidden flex items-center px-4 py-2 bg-indigo-500 text-white rounded-lg shadow-md hover:bg-indigo-600 transition-all duration-300"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-            </svg>
-            Lessons
-          </button>
-        )}
-      </nav>
+    <div className="flex flex-col items-center">
+      <Header />
 
-      {/* Main Content Area */}
-      <main className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
-        {currentView === 'modules' && (
-          <ModuleList modules={modules} onSelectModule={handleModuleSelect} />
-        )}
-
-        {currentView === 'lessonsAndDetail' && selectedModule && (
-          <div className="flex flex-col md:flex-row gap-6">
-            {/* Sidebar for Lessons (visible on desktop, toggleable on mobile) */}
-            <LessonSidebar
-              module={selectedModule}
-              onSelectLesson={handleLessonSelect}
-              selectedLessonId={selectedLesson?.id}
-              isOpen={isSidebarOpen}
-              onClose={() => setIsSidebarOpen(false)}
-            />
-
-            {/* Main Lesson Content */}
-            <div className={`flex-1 ${isSidebarOpen ? 'hidden md:block' : 'block'}`}>
-              {selectedLesson ? (
-                <LessonDetail lesson={selectedLesson} />
-              ) : (
-                <div className="text-center py-10 text-gray-500">
-                  <p className="text-xl">Please select a lesson from the sidebar to begin.</p>
-                  <p className="text-sm mt-2">
-                    <span className="md:hidden">Tap the "Lessons" button above to open the sidebar.</span>
-                    <span className="hidden md:inline">Choose a lesson from the left.</span>
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+      <main className="w-full flex-grow">
+        {currentPage === 'classList' ? (
+          // Render ClassList component when on the class list page
+          <ClassList classes={mapel} onSelectClass={handleSelectClass} />
+        ) : (
+          // Render ClassDetail component when on the class detail page
+          <ClassDetail selectedClass={selectedClass} onBackToClasses={handleBackToClasses} />
         )}
       </main>
-    </>
-  );
-};
 
-// Component to display a list of modules
-const ModuleList = ({ modules, onSelectModule }) => {
+      <Footer />
+    </div>
+  );
+}
+
+/**
+ * ClassList Component: Displays a list of available classes.
+ * @param {object} props - Component props.
+ * @param {Array<object>} props.classes - An array of class objects.
+ * @param {function} props.onSelectClass - Callback function when a class is selected.
+ */
+function ClassList({ classes, onSelectClass }) {
   return (
-    <div className="mx-auto">
-      <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Available Modules</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {modules.map((module) => (
+    <div className="bg-white dark:bg-black p-6 rounded-lg shadow-xl">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-indigo-600 dark:text-amber-700">Mata Pelajaran</h2>
+      <div className="flex flex-wrap justify-center gap-6">
+        {classes.map((classItem) => (
           <div
-            key={module.id}
-            className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col justify-between"
-            onClick={() => onSelectModule(module)}
+            key={classItem.id}
+            className="w-xl h-md bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 dark:bg-gradient-to-br dark:from-slate-950 dark:to-gray-950 dark:border-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer flex flex-col overflow-hidden"
+            onClick={() => onSelectClass(classItem)}
           >
-            <div>
-              <h3 className="text-xl font-semibold text-indigo-600 mb-2">{module.title}</h3>
-              <p className="text-gray-600 text-sm">{module.description}</p>
+            <img
+              src={classItem.image}
+              alt={classItem.name}
+              className="w-full h-48 object-cover rounded-t-xl"
+              onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/400x200/F0F8FF/2C3E50?text=${encodeURIComponent(classItem.name)}`; }}
+            />
+            <div className="p-5 flex flex-col flex-grow">
+              <h3 className="text-xl font-bold text-indigo-800 dark:text-amber-700 mb-2">{classItem.name}</h3>
+              <p className="text-gray-700 dark:text-neutral-200 text-sm flex-grow">{classItem.description}</p>
             </div>
           </div>
         ))}
       </div>
     </div>
   );
-};
+}
 
-// Component for the Lesson Sidebar
-const LessonSidebar = ({ module, onSelectLesson, selectedLessonId, isOpen, onClose }) => {
+/**
+ * ClassDetail Component: Displays the details of a selected class, including modules and lessons.
+ * @param {object} props - Component props.
+ * @param {object} props.selectedClass - The class object currently selected.
+ * @param {function} props.onBackToClasses - Callback function to navigate back to the class list.
+ */
+function ClassDetail({ selectedClass, onBackToClasses }) {
+  // State to manage the currently selected module
+  const [selectedModule, setSelectedModule] = useState(null);
+  // State to manage the currently selected lesson
+  const [selectedLesson, setSelectedLesson] = useState(null);
+
+  // Effect to set initial selected module and lesson when selectedClass changes
+  useEffect(() => {
+    if (selectedClass && selectedClass.modules.length > 0) {
+      setSelectedModule(selectedClass.modules[0]); // Select the first module by default
+      if (selectedClass.modules[0].lessons.length > 0) {
+        setSelectedLesson(selectedClass.modules[0].lessons[0]); // Select the first lesson of the first module
+      } else {
+        setSelectedLesson(null);
+      }
+    } else {
+      setSelectedModule(null);
+      setSelectedLesson(null);
+    }
+  }, [selectedClass]); // Re-run when selectedClass changes
+
+  if (!selectedClass) {
+    return (
+      <div className="text-center p-8 bg-white dark:bg-black rounded-lg shadow-md">
+        <p className="text-lg text-gray-600">No class selected. Please go back and select a class.</p>
+        <button
+          onClick={onBackToClasses}
+          className="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200 shadow-md"
+        >
+          Kembali
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className={`fixed inset-0 z-40 bg-gray-800 bg-opacity-75 md:relative md:bg-transparent md:inset-auto md:z-auto md:w-1/3 md:max-w-xs transition-transform duration-300 ease-in-out
-                     ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-      <div className="bg-white rounded-xl shadow-lg p-6 h-full overflow-y-auto md:h-auto md:static">
-        <div className="flex justify-between items-center mb-6 md:hidden">
-          <h2 className="text-xl font-bold text-gray-900">Lessons</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <h2 className="hidden md:block text-2xl font-bold text-gray-900 mb-4">Lessons in {module.title}</h2>
-        <ul className="space-y-2">
-          {module.lessons.map((lesson) => (
-            <li
-              key={lesson.id}
-              className={`p-3 rounded-lg cursor-pointer transition-colors duration-200
-                          ${selectedLessonId === lesson.id ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'hover:bg-gray-100 text-gray-800'}`}
-              onClick={() => onSelectLesson(lesson)}
-            >
-              {lesson.title}
-            </li>
+    <div className="bg-white dark:bg-black p-6 rounded-lg shadow-xl flex flex-col h-full">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 pb-4 gap-3 border-b border-gray-200 dark:border-slate-900">
+        <button
+          onClick={onBackToClasses}
+          className="bg-gray-200 dark:bg-amber-900 text-gray-700 dark:text-amber-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-amber-700 transition-colors duration-200 shadow-sm flex items-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H16a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+          Kembali
+        </button>
+        <h2 className="text-2xl sm:text-3xl font-bold text-indigo-700 dark:text-amber-700">{selectedClass.name}</h2>
+      </div>
+
+      <div className="flex flex-col lg:flex-row flex-grow gap-6">
+        {/* Sidebar for Modules and Lessons */}
+        <aside className="w-full lg:w-1/4 bg-gray-50 dark:bg-slate-900 p-4 rounded-lg shadow-inner overflow-y-auto max-h-[calc(100vh-250px)] lg:max-h-[unset]">
+          <h3 className="text-xl font-semibold text-indigo-600 dark:text-amber-700 mb-4">Konten Mata Pelajaran</h3>
+          {selectedClass.modules.map((moduleItem) => (
+            <div key={moduleItem.id} className="mb-4">
+              <button
+                onClick={() => {
+                  setSelectedModule(moduleItem);
+                  // If the module has lessons, select the first one
+                  if (moduleItem.lessons.length > 0) {
+                    setSelectedLesson(moduleItem.lessons[0]);
+                  } else {
+                    setSelectedLesson(null);
+                  }
+                }}
+                className={`w-full text-left p-3 rounded-md font-medium transition-colors duration-200 flex items-center justify-between
+                  ${selectedModule && selectedModule.id === moduleItem.id
+                    ? 'bg-indigo-100 text-indigo-800 dark:bg-amber-900 dark:text-amber-100'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-black dark:text-slate-200 dark:hover:bg-amber-900'
+                  }`}
+              >
+                <span>{moduleItem.name}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transform ${selectedModule && selectedModule.id === moduleItem.id ? 'rotate-90' : ''} transition-transform`} viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+              {selectedModule && selectedModule.id === moduleItem.id && (
+                <ul className="mt-2 ml-4 border-l border-gray-300 pl-4">
+                  {moduleItem.lessons.map((lessonItem) => (
+                    <li key={lessonItem.id} className="mb-1">
+                      <button
+                        onClick={() => setSelectedLesson(lessonItem)}
+                        className={`w-full text-left p-2 text-sm rounded-md transition-colors duration-200
+                          ${selectedLesson && selectedLesson.id === lessonItem.id
+                            ? 'bg-indigo-50 text-indigo-700 font-semibold dark:bg-amber-800 dark:text-amber-200'
+                            : 'text-gray-600 hover:bg-gray-50 dark:text-slate-200 dark:hover:bg-amber-800'
+                          }`}
+                      >
+                        {lessonItem.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
+        </aside>
 
-// Component to display the detailed content of a lesson
-const LessonDetail = ({ lesson }) => {
-  return (
-    <div>
-      <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">{lesson.title}</h2>
-      <div className="prose max-w-none text-gray-700 leading-relaxed">
-        <p>{lesson.content}</p>
+        {/* Content Area for Lesson */}
+        <section className="w-full lg:w-3/4 bg-white dark:bg-slate-900 p-6 rounded-lg shadow-md border border-gray-200 dark:border-slate-900 overflow-y-auto max-h-[calc(100vh-250px)] lg:max-h-[unset]">
+          {selectedLesson ? (
+            <>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-neutral-200 mb-4">{selectedLesson.name}</h3>
+              <div className="prose prose-indigo max-w-none">
+                <p className="text-gray-800 dark:text-neutral-100 leading-relaxed">{selectedLesson.content}</p>
+              </div>
+            </>
+          ) : (
+            <div className="text-center text-gray-500 dark:text-neutral-100 py-10">
+              <p className="text-lg">Please select a lesson from the sidebar to view its content.</p>
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
-};
+}

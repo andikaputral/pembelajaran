@@ -1,9 +1,9 @@
-import { Home } from "./pages/Home"
+import { Module } from "./pages/Module"
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 font-inter text-gray-900 p-4 sm:p-6 lg:p-8 flex flex-col">
-        <Home />          
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 dark:bg-gradient-to-br dark:from-slate-950 dark:to-gray-950 font-inter p-4 sm:p-6 lg:p-8 flex flex-col">
+        <Module />          
     </div>
   )
 }
