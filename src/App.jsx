@@ -1,19 +1,10 @@
-import { useState } from 'react'
+import { Home } from "./pages/Home"
 
 function App() {
-  const [likes, setLikes] = useState(0);
-
-  function handleClick() {
-    setLikes(likes + 1);
-  }
-
   return (
-    <>
-      <div className='flex flex-col items-center'>
-        <h1 className='text-4xl font-bold'>Selamat datang di pembelajaran SMK NU Kejajar.</h1>
-        <button onClick={handleClick}>{likes} like</button>
-      </div>
-    </>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 font-inter text-gray-900 p-4 sm:p-6 lg:p-8 flex flex-col">
+        <Home />          
+    </div>
   )
 }
 
