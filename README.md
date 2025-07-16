@@ -1,7 +1,7 @@
 # Belajar SMK NU Kejajar
 
 <p align="center">
-  <img src="[https://img.shields.io/github/deployments/andikaputral/pembelajaran/github-pages?style=flat-square&logo=bookstack&logoColor=white&label=site](https://img.shields.io/github/deployments/andikaputral/pembelajaran/github-pages?style=flat-square&logo=bookstack&logoColor=white&label=site" />
+  <img src="https://img.shields.io/github/deployments/andikaputral/pembelajaran/github-pages?logo=bookstack&logoColor=white&label=site" />
   <a href="https://vite.dev/"><img alt="Vite Version" src="https://img.shields.io/npm/v/vite?logo=vite&label=Vite"></a>
   <a href="https://react.dev/"><img alt="React Version" src="https://img.shields.io/npm/v/react?logo=react&label=React"></a>
 </p>
