@@ -6,5 +6,6 @@ import { lesson4 } from "./module3/lesson4";
 export const module3 = {
 	id: "3",
 	name: "Module 3: JavaScript Basics",
+	disabled: true,
 	lessons: [lesson1, lesson2, lesson3, lesson4],
 };

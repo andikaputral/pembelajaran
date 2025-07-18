@@ -66,7 +66,7 @@ function ClassList({ classes, onSelectClass }) {
 				{classes.map((classItem) => (
 					<div
 						key={classItem.id}
-						className={`w-xl h-md bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 dark:bg-gradient-to-br dark:from-slate-950 dark:to-gray-950 dark:border-slate-800 rounded-xl shadow-lg ${
+						className={`relative w-xl h-md bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 dark:bg-gradient-to-br dark:from-slate-950 dark:to-gray-950 dark:border-slate-800 rounded-xl shadow-lg ${
 							classItem.disabled
 								? "opacity-60 cursor-not-allowed"
 								: "hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer"
@@ -74,6 +74,11 @@ function ClassList({ classes, onSelectClass }) {
 						onClick={
 							classItem.disabled ? null : () => onSelectClass(classItem)
 						}>
+						<div
+							className={`absolute inset-0 bg-gray-400/50 ${
+								classItem.disabled ? "block" : "hidden"
+							}`}
+						/>
 						<img
 							src={classItem.image}
 							alt={classItem.name}
@@ -141,6 +146,7 @@ function ClassDetail({ selectedClass, onBackToClasses }) {
 			</div>
 		);
 	}
+	console.log(selectedClass);
 
 	return (
 		<div className="bg-white dark:bg-slate-950 p-6 rounded-lg shadow-xl flex flex-col h-full">
@@ -177,21 +183,25 @@ function ClassDetail({ selectedClass, onBackToClasses }) {
 					{selectedClass.modules.map((moduleItem) => (
 						<div key={moduleItem.id}>
 							<button
-								onClick={() => {
-									setSelectedModule(moduleItem);
-									// If the module has lessons, select the first one
-									if (moduleItem.lessons.length > 0) {
-										setSelectedLesson(moduleItem.lessons[0]);
-									} else {
-										setSelectedLesson(null);
-									}
-								}}
+								onClick={
+									moduleItem.disabled
+										? null
+										: () => {
+												setSelectedModule(moduleItem);
+												// If the module has lessons, select the first one
+												if (moduleItem.lessons.length > 0) {
+													setSelectedLesson(moduleItem.lessons[0]);
+												} else {
+													setSelectedLesson(null);
+												}
+										  }
+								}
 								className={`w-full text-left p-3 rounded-md font-medium transition-colors duration-200 flex items-center justify-between
                   ${
 										selectedModule && selectedModule.id === moduleItem.id
 											? "bg-indigo-100 text-indigo-800 dark:bg-amber-900 dark:text-amber-100 z-10"
 											: "bg-white text-gray-700 hover:bg-gray-100 dark:bg-black dark:text-slate-200 dark:hover:bg-amber-900"
-									}`}>
+									} ${moduleItem.disabled ? "hidden" : ""}`}>
 								<span>{moduleItem.name}</span>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -243,11 +253,10 @@ function ClassDetail({ selectedClass, onBackToClasses }) {
 								{selectedLesson.name}
 							</h3>
 							<div className="border border-neutral-200 mb-4 mt-2" />
-							<div className="prose prose-indigo max-w-none">
-								<p className="text-gray-800 dark:text-neutral-100 leading-relaxed">
-									{selectedLesson.content}
-								</p>
-							</div>
+							<div
+								className="prose max-w-none text-gray-800 dark:text-neutral-100 hyphens-auto text-justify indent-5 leading-relaxed"
+								dangerouslySetInnerHTML={{ __html: selectedLesson.content }}
+							/>
 						</>
 					) : (
 						<div className="text-center text-gray-500 dark:text-neutral-100 py-10">
