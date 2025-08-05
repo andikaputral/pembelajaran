@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import courseData from "../data/mapel";
@@ -10,10 +10,27 @@ export default function ClassView() {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		const root = window.document.body;
+
+		if (isSidebarOpen) {
+			root.classList.add("overflow-hidden");
+		} else {
+			root.classList.remove("overflow-hidden");
+		}
+		return () => root.classList.remove("overflow-hidden");
+	}, [isSidebarOpen]);
+
 	const course = useMemo(
 		() => courseData.find((c) => c.id === classId),
 		[classId]
 	);
+
+	useEffect(() => {
+		if (course.disabled) {
+			navigate("/pembelajaran");
+		}
+	}, [course, navigate]);
 
 	const flatLessons = useMemo(() => {
 		if (!course) return [];
@@ -45,6 +62,10 @@ export default function ClassView() {
 			navigate(`/pembelajaran/c/${classId}/${prevLesson.id}`);
 		}
 	};
+
+	if (!course || course.disabled) {
+		return null;
+	}
 
 	return (
 		<div className="relative md:flex min-h-screen">

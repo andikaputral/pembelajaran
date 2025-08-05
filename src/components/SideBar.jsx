@@ -23,6 +23,10 @@ export const Sidebar = ({ course, activeLessonId, onClose }) => {
 				setOpenModuleId(parentModule.id);
 			}
 		}
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	}, [activeLessonId, course]);
 
 	const toggleModule = (moduleId) => {

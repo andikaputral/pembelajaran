@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import ClassList from "./pages/ClassList";
 import ClassView from "./pages/ClassView";
 import { SwitchDarkMode } from "./components/SwitchDarkMode";
@@ -15,6 +15,7 @@ function App() {
 						path="/pembelajaran/c/:classId/:lessonId"
 						element={<ClassView />}
 					/>
+					<Route path="*" element={<Navigate to="/pembelajaran" replace />} />
 				</Routes>
 			</div>
 		</BrowserRouter>
