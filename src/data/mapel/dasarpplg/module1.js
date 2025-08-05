@@ -4,6 +4,7 @@ import { lesson2 } from "./module1/lesson2";
 
 export const module1 = {
 	id: "1",
-	name: "Rekayasa Perangkat Lunak",
+	title: "Rekayasa Perangkat Lunak",
+	disabled: false,
 	lessons: [lesson1, lesson2],
 };
