@@ -1,10 +1,23 @@
-import { Module } from "./pages/Module";
+import { BrowserRouter, Routes, Route } from "react-router";
+import ClassList from "./pages/ClassList";
+import ClassView from "./pages/ClassView";
+import { SwitchDarkMode } from "./components/SwitchDarkMode";
 
 function App() {
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 dark:bg-gradient-to-br dark:from-black dark:to-gray-950 font-inter p-4 sm:p-6 lg:p-8 flex flex-col">
-			<Module />
-		</div>
+		<BrowserRouter>
+			<SwitchDarkMode />
+			<div className="min-h-screen bg-gray-100 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100">
+				<Routes>
+					<Route path="/pembelajaran" element={<ClassList />} />
+					<Route path="/pembelajaran/c/:classId" element={<ClassView />} />
+					<Route
+						path="/pembelajaran/c/:classId/:lessonId"
+						element={<ClassView />}
+					/>
+				</Routes>
+			</div>
+		</BrowserRouter>
 	);
 }
 
