@@ -5,7 +5,7 @@ import { lesson4 } from "./module2/lesson4";
 
 export const module2 = {
 	id: "2",
-	name: "Module 2: CSS Fundamentals",
-	disabled: true,
+	title: "Hyper Text Markup Language",
+	disabled: false,
 	lessons: [lesson1, lesson2, lesson3, lesson4],
 };
