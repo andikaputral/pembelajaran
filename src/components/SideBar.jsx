@@ -37,23 +37,23 @@ export const Sidebar = ({ course, activeLessonId, onClose }) => {
 		switch (type) {
 			case "video":
 				return (
-					<FilmIcon className="h-5 w-5 mr-3 text-indigo-600 dark:text-indigo-400" />
+					<FilmIcon className="size-6 mr-3 text-indigo-600 dark:text-indigo-400" />
 				);
 			case "reading":
 				return (
-					<BookOpenIcon className="h-5 w-5 mr-3 text-sky-700 dark:text-sky-400" />
+					<BookOpenIcon className="size-5 mr-3 text-sky-700 dark:text-sky-400" />
 				);
 			case "text":
 				return (
-					<DocumentTextIcon className="h-5 w-5 mr-3 text-emerald-700 dark:text-emerald-400" />
+					<DocumentTextIcon className="size-5 mr-3 text-emerald-700 dark:text-emerald-400" />
 				);
 			case "code":
 				return (
-					<CodeBracketIcon className="h-5 w-5 mr-3 text-slate-700 dark:text-slate-400" />
+					<CodeBracketIcon className="size-5 mr-3 text-slate-700 dark:text-slate-400" />
 				);
 			default:
 				return (
-					<DocumentIcon className="h-5 w-5 mr-3 text-gray-700 dark:text-gray-400" />
+					<DocumentIcon className="size-5 mr-3 text-gray-700 dark:text-gray-400" />
 				);
 		}
 	};
