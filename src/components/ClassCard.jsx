@@ -8,7 +8,7 @@ export default function ClassCard({ course }) {
 			const firstAvailableModule = course.modules.find((m) => !m.disabled);
 			if (firstAvailableModule && firstAvailableModule.lessons.length > 0) {
 				navigate(
-					`/pembelajaran/c/${course.id}/${firstAvailableModule.lessons[0].id}`
+					`/pembelajaran/c/${course.id}/m/${firstAvailableModule.id}/${firstAvailableModule.lessons[0].id}`
 				);
 			} else {
 				navigate(`/pembelajaran/c/${course.id}`);

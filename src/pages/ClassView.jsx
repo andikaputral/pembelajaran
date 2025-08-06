@@ -6,7 +6,7 @@ import { Sidebar } from "../components/Sidebar";
 import { Content } from "../components/Content";
 
 export default function ClassView() {
-	const { classId, lessonId } = useParams();
+	const { classId, moduleId, lessonId } = useParams();
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -29,37 +29,58 @@ export default function ClassView() {
 	useEffect(() => {
 		if (course.disabled) {
 			navigate("/pembelajaran");
+		} else if (course && !moduleId && !lessonId) {
+			const firstAvailableModule = course.modules.find((m) => !m.disabled);
+			if (firstAvailableModule && firstAvailableModule.lessons.length > 0) {
+				navigate(
+					`/pembelajaran/c/${course.id}/m/${firstAvailableModule.id}/${firstAvailableModule.lessons[0].id}`,
+					{ replace: true }
+				);
+			}
 		}
-	}, [course, navigate]);
+	}, [course, navigate, moduleId, lessonId]);
 
 	const flatLessons = useMemo(() => {
 		if (!course) return [];
 		return course.modules
 			.filter((module) => !module.disabled)
-			.flatMap((module) => module.lessons);
+			.flatMap((module) =>
+				module.lessons.map((lesson) => ({
+					...lesson,
+					moduleId: module.id,
+				}))
+			);
 	}, [course]);
 
-	const lesson = useMemo(
-		() => flatLessons.find((l) => l.id === lessonId),
-		[lessonId, flatLessons]
-	);
+	const lesson = useMemo(() => {
+		if (!course || !moduleId || !lessonId) return null;
+		const module = course.modules.find((m) => m.id === moduleId);
+		if (!module) return null;
+		return module.lessons.find((l) => l.id === lessonId);
+	}, [course, moduleId, lessonId]);
 
 	const currentLessonIndex = useMemo(() => {
-		if (!lesson) return -1;
-		return flatLessons.findIndex((l) => l.id === lesson.id);
-	}, [lesson, flatLessons]);
+		if (!lessonId || !moduleId) return -1;
+		return flatLessons.findIndex(
+			(l) => l.id === lessonId && l.moduleId === moduleId
+		);
+	}, [lessonId, moduleId, flatLessons]);
 
 	const handleNext = () => {
 		if (currentLessonIndex < flatLessons.length - 1) {
 			const nextLesson = flatLessons[currentLessonIndex + 1];
-			navigate(`/pembelajaran/c/${classId}/${nextLesson.id}`);
+			navigate(
+				`/pembelajaran/c/${classId}/m/${nextLesson.moduleId}/${nextLesson.id}`
+			);
 		}
 	};
 
 	const handlePrev = () => {
 		if (currentLessonIndex > 0) {
 			const prevLesson = flatLessons[currentLessonIndex - 1];
-			navigate(`/pembelajaran/c/${classId}/${prevLesson.id}`);
+			navigate(
+				`/pembelajaran/c/${classId}/m/${prevLesson.moduleId}/${prevLesson.id}`
+			);
 		}
 	};
 
@@ -69,7 +90,7 @@ export default function ClassView() {
 
 	return (
 		<div className="relative md:flex min-h-screen">
-			<div className="static md:sticky md:top-0 w-full md:w-xl md:h-screen bg-gray-100 dark:bg-gray-800 shadow-md">
+			<div className="static md:sticky md:top-0 w-full md:w-lg md:h-screen bg-gray-100 dark:bg-gray-800 shadow-md">
 				{/* Mobile Sidebar */}
 				<div
 					className={`fixed inset-y-0 z-20 w-3/4 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out md:hidden ${
@@ -77,6 +98,7 @@ export default function ClassView() {
 					}`}>
 					<Sidebar
 						course={course}
+						activeModuleId={moduleId}
 						activeLessonId={lessonId}
 						onClose={() => setIsSidebarOpen(false)}
 					/>
@@ -89,7 +111,7 @@ export default function ClassView() {
 
 				{/* Desktop Sidebar */}
 				<div className="hidden md:flex md:flex-shrink-0 flex-col">
-					<div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+					<div className="p-4 border-b border-gray-200 dark:border-gray-700 shrink-0">
 						<Link
 							to="/pembelajaran"
 							className="p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors w-full flex items-center justify-center text-sm">
@@ -99,6 +121,7 @@ export default function ClassView() {
 					</div>
 					<Sidebar
 						course={course}
+						activeModuleId={moduleId}
 						activeLessonId={lessonId}
 						onClose={() => {}}
 					/>

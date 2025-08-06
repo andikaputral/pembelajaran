@@ -12,7 +12,7 @@ function App() {
 					<Route path="/pembelajaran" element={<ClassList />} />
 					<Route path="/pembelajaran/c/:classId" element={<ClassView />} />
 					<Route
-						path="/pembelajaran/c/:classId/:lessonId"
+						path="/pembelajaran/c/:classId/m/:moduleId/:lessonId"
 						element={<ClassView />}
 					/>
 					<Route path="*" element={<Navigate to="/pembelajaran" replace />} />

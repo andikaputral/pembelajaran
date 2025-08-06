@@ -9,28 +9,28 @@ import {
 	XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
-export const Sidebar = ({ course, activeLessonId, onClose }) => {
+export const Sidebar = ({
+	course,
+	activeModuleId,
+	activeLessonId,
+	onClose,
+}) => {
 	const [openModuleId, setOpenModuleId] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (activeLessonId) {
-			const parentModule = course.modules.find((module) =>
-				module.lessons.some((lesson) => lesson.id === activeLessonId)
-			);
-			if (parentModule) {
-				setOpenModuleId(parentModule.id);
-			}
-		}
+		setOpenModuleId(activeModuleId);
 		window.scrollTo({
 			top: 0,
 			behavior: "smooth",
 		});
-	}, [activeLessonId, course]);
+	}, [activeModuleId]);
 
 	const toggleModule = (moduleId) => {
 		setOpenModuleId((prevId) => (prevId === moduleId ? null : moduleId));
+		navigate(`/pembelajaran/c/${course.id}/m/${moduleId}/1`, { replace: true });
 	};
 
 	const LessonIcon = ({ type }) => {
@@ -106,7 +106,7 @@ export const Sidebar = ({ course, activeLessonId, onClose }) => {
 									{module.lessons.map((lesson) => (
 										<li key={lesson.id}>
 											<Link
-												to={`/pembelajaran/c/${course.id}/${lesson.id}`}
+												to={`/pembelajaran/c/${course.id}/m/${module.id}/${lesson.id}`}
 												onClick={onClose}
 												className={`flex items-center p-3 rounded-lg text-sm transition-transform ${
 													activeLessonId === lesson.id
