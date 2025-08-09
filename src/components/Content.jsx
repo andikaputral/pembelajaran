@@ -63,14 +63,14 @@ export const Content = ({
 				<button
 					onClick={onPrev}
 					disabled={isFirst}
-					className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700">
+					className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50 disabled:bg-gray-600 disabled:cursor-not-allowed hover:bg-indigo-700">
 					<ArrowLeftIcon className="h-5 w-5 mr-2" />
 					Previous
 				</button>
 				<button
 					onClick={onNext}
 					disabled={isLast}
-					className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700">
+					className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50 disabled:bg-gray-600 disabled:cursor-not-allowed hover:bg-indigo-700">
 					Next
 					<ArrowRightIcon className="h-5 w-5 ml-2" />
 				</button>
