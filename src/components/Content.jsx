@@ -49,12 +49,12 @@ export const Content = ({
 				className="flex fixed lg:hidden top-4 left-32 p-2 gap-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white z-10">
 				<Bars3Icon className="size-6" /> Module
 			</button>
-			<main className="flex-1 mt-12 lg:mt-0 p-8 lg:p-12 pb-28">
+			<main className="flex-1 mt-12 lg:mt-0 p-8 lg:p-12 lg:pb-28">
 				<header className="prose prose-md md:prose-lg lg:prose-xl dark:prose-invert max-w-full mb-12">
 					<h1>{lesson.title}</h1>
 				</header>
 				<div
-					className="prose prose-lg lg:prose-xl dark:prose-invert max-w-none"
+					className="prose prose-lg lg:prose-xl dark:prose-invert text-justify hyphens-auto max-w-none"
 					dangerouslySetInnerHTML={{ __html: lesson.content }}
 				/>
 			</main>
