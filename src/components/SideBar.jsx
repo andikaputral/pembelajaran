@@ -63,12 +63,12 @@ export const Sidebar = ({
 			<div className="flex flex-row-reverse">
 				<button
 					onClick={onClose}
-					className="md:hidden p-5 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+					className="lg:hidden p-5 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
 					<XMarkIcon className="size-6" />
 				</button>
 			</div>
 
-			<aside className="flex-1 bg-gray-100 dark:bg-gray-800 pl-6 pr-3 pb-6 md:p-6 shrink-0">
+			<aside className="flex-1 bg-gray-100 dark:bg-gray-800 pl-6 pr-3 pb-6 lg:p-6 shrink-0">
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
 					{course.title}
 				</h2>

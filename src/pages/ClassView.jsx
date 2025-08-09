@@ -89,11 +89,11 @@ export default function ClassView() {
 	}
 
 	return (
-		<div className="relative md:flex min-h-screen">
-			<div className="static md:sticky md:top-0 w-full md:w-lg md:h-screen bg-gray-100 dark:bg-gray-800 shadow-md">
+		<div className="relative lg:flex min-h-screen">
+			<div className="static lg:sticky lg:top-0 w-full lg:w-lg lg:h-screen bg-gray-100 dark:bg-gray-800 shadow-md">
 				{/* Mobile Sidebar */}
 				<div
-					className={`fixed inset-y-0 z-20 w-3/4 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out md:hidden ${
+					className={`fixed inset-y-0 z-20 w-3/4 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden ${
 						isSidebarOpen ? "translate-x-0" : "-translate-x-full"
 					}`}>
 					<Sidebar
@@ -105,12 +105,12 @@ export default function ClassView() {
 				</div>
 				{isSidebarOpen && (
 					<div
-						className="fixed inset-0 bg-black/50 z-10 md:hidden"
+						className="fixed inset-0 bg-black/50 z-10 lg:hidden"
 						onClick={() => setIsSidebarOpen(false)}></div>
 				)}
 
 				{/* Desktop Sidebar */}
-				<div className="hidden md:flex md:flex-shrink-0 flex-col">
+				<div className="hidden lg:flex lg:shrink-0 flex-col">
 					<div className="p-4 border-b border-gray-200 dark:border-gray-700 shrink-0">
 						<Link
 							to="/pembelajaran"
