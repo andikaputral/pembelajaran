@@ -5,6 +5,7 @@ import { lesson4 } from "./module2/lesson4";
 
 export const module2 = {
 	id: "2",
-	name: "Module 2: Asynchronous JavaScript",
+	title: "Module 2: Asynchronous JavaScript",
+	disabled: true,
 	lessons: [lesson1, lesson2, lesson3, lesson4],
 };
