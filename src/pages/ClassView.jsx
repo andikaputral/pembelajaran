@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import courseData from "../data/mapel";
+import courseDetails from "../data/modules";
 import { Sidebar } from "../components/Sidebar";
 import { Content } from "../components/Content";
 
@@ -10,21 +11,25 @@ export default function ClassView() {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const root = window.document.body;
-
-		if (isSidebarOpen) {
-			root.classList.add("overflow-hidden");
-		} else {
-			root.classList.remove("overflow-hidden");
-		}
-		return () => root.classList.remove("overflow-hidden");
-	}, [isSidebarOpen]);
-
-	const course = useMemo(
+	const courseInfo = useMemo(
 		() => courseData.find((c) => c.id === classId),
 		[classId]
 	);
+	const course = useMemo(() => {
+		if (!courseInfo) return null;
+		return { ...courseInfo, ...courseDetails[courseInfo.id] };
+	}, [courseInfo]);
+
+	useEffect(() => {
+		if (isSidebarOpen) {
+			document.body.classList.add("overflow-hidden");
+		} else {
+			document.body.classList.remove("overflow-hidden");
+		}
+		return () => {
+			document.body.classList.remove("overflow-hidden");
+		};
+	}, [isSidebarOpen]);
 
 	useEffect(() => {
 		if (course.disabled) {

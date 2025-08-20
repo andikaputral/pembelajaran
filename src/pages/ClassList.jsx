@@ -1,5 +1,5 @@
 import courseData from "../data/mapel";
-import ClassCard from "../components/ClassCard";
+import { ClassCard } from "../components/ClassCard";
 import Footer from "../components/Footer";
 
 export default function ClassList() {

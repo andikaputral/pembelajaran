@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router";
+import courseDetails from "../data/modules";
+import { memo } from "react";
 
-export default function ClassCard({ course }) {
+export const ClassCard = memo(({ course }) => {
 	const navigate = useNavigate();
 
 	const handleSelect = () => {
 		if (!course.disabled) {
-			const firstAvailableModule = course.modules.find((m) => !m.disabled);
+			const details = courseDetails[course.id];
+			const firstAvailableModule = details.modules.find((m) => !m.disabled);
 			if (firstAvailableModule && firstAvailableModule.lessons.length > 0) {
 				navigate(
 					`/pembelajaran/c/${course.id}/m/${firstAvailableModule.id}/${firstAvailableModule.lessons[0].id}`
@@ -25,10 +28,11 @@ export default function ClassCard({ course }) {
 					: "hover:shadow-xl cursor-pointer hover:border-indigo-400"
 			}`}>
 			<img
+				loading="lazy"
 				src={course.image}
 				alt={course.title}
-				className={`w-full h-64 object-cover rounded-t-[11px] ${
-					course.disabled ? "opacity-50" : "opacity-100"
+				className={`w-full h-48 object-cover rounded-t-xl ${
+					course.disabled ? "opacity-50" : ""
 				}`}
 				onError={(e) => {
 					e.target.onerror = null;
@@ -50,4 +54,4 @@ export default function ClassCard({ course }) {
 			</div>
 		</div>
 	);
-}
+});
