@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate, Link } from "react-router";
+import { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate, Link } from 'react-router';
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -11,35 +11,35 @@ import {
 	LockClosedIcon,
 	MoonIcon,
 	SunIcon,
-} from "@heroicons/react/24/outline";
-import courseData from "../data/mockdata";
+} from '@heroicons/react/24/outline';
+import courseData from '../data/mockdata';
 
 const useDarkMode = () => {
-	const [theme, setTheme] = useState(localStorage.getItem("theme"));
+	const [theme, setTheme] = useState(localStorage.getItem('theme'));
 
 	useEffect(() => {
-		const initialTheme = localStorage.getItem("theme");
+		const initialTheme = localStorage.getItem('theme');
 
 		if (initialTheme) {
 			setTheme(initialTheme);
 		} else {
-			const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
 				.matches
-				? "dark"
-				: "light";
+				? 'dark'
+				: 'light';
 			setTheme(systemTheme);
 		}
 	}, []);
 
 	useEffect(() => {
 		const root = window.document.documentElement;
-		root.classList.remove("light", "dark");
+		root.classList.remove('light', 'dark');
 		root.classList.add(theme);
-		localStorage.setItem("theme", theme);
+		localStorage.setItem('theme', theme);
 	}, [theme]);
 
 	const toggleTheme = () => {
-		setTheme(theme === "light" ? "dark" : "light");
+		setTheme(theme === 'light' ? 'dark' : 'light');
 	};
 
 	return [theme, toggleTheme];
@@ -47,11 +47,11 @@ const useDarkMode = () => {
 
 const LessonIcon = ({ type }) => {
 	switch (type) {
-		case "video":
+		case 'video':
 			return <FilmIcon className="h-5 w-5 mr-3 text-indigo-400" />;
-		case "reading":
+		case 'reading':
 			return <BookOpenIcon className="h-5 w-5 mr-3 text-sky-400" />;
-		case "text":
+		case 'text':
 			return <DocumentTextIcon className="h-5 w-5 mr-3 text-emerald-400" />;
 		default:
 			return <DocumentIcon className="h-5 w-5 mr-3 text-gray-400" />;
@@ -78,11 +78,11 @@ const ClassCard = ({ course, isSelected }) => {
 		<div
 			onClick={handleSelect}
 			className={`bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-all duration-300 border-2 ${
-				isSelected ? "border-indigo-500" : "border-transparent"
+				isSelected ? 'border-indigo-500' : 'border-transparent'
 			} ${
 				course.disabled
-					? "opacity-50 cursor-not-allowed"
-					: "hover:shadow-xl cursor-pointer hover:border-indigo-400"
+					? 'opacity-50 cursor-not-allowed'
+					: 'hover:shadow-xl cursor-pointer hover:border-indigo-400'
 			}`}>
 			<h3 className="text-xl font-bold text-gray-800 dark:text-white">
 				{course.title}
@@ -125,8 +125,8 @@ const Sidebar = ({ course, activeLessonId }) => {
 							disabled={module.disabled}
 							className={`w-full flex items-center justify-between text-left font-semibold text-gray-700 dark:text-gray-200 p-3 rounded-lg transition-colors duration-200 ${
 								module.disabled
-									? "opacity-50 cursor-not-allowed"
-									: "hover:bg-gray-200 dark:hover:bg-gray-700"
+									? 'opacity-50 cursor-not-allowed'
+									: 'hover:bg-gray-200 dark:hover:bg-gray-700'
 							}`}>
 							<span className="flex items-center">
 								{module.disabled && <LockClosedIcon className="h-4 w-4 mr-2" />}
@@ -134,15 +134,15 @@ const Sidebar = ({ course, activeLessonId }) => {
 							</span>
 							<ChevronRightIcon
 								className={`h-5 w-5 transition-transform duration-300 ${
-									openModuleId === module.id ? "rotate-90" : ""
+									openModuleId === module.id ? 'rotate-90' : ''
 								}`}
 							/>
 						</button>
 						<div
 							className={`transition-[max-height] duration-500 ease-in-out overflow-hidden ${
 								openModuleId === module.id && !module.disabled
-									? "max-h-screen"
-									: "max-h-0"
+									? 'max-h-screen'
+									: 'max-h-0'
 							}`}>
 							<ul className="mt-2 ml-4 pl-4 border-l-2 border-gray-200 dark:border-gray-600 space-y-1 py-1">
 								{module.lessons.map((lesson) => (
@@ -151,8 +151,8 @@ const Sidebar = ({ course, activeLessonId }) => {
 											to={`/pembelajaran/c/${course.id}/${lesson.id}`}
 											className={`flex items-center p-3 rounded-lg transition-colors duration-200 text-sm ${
 												activeLessonId === lesson.id
-													? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-semibold"
-													: "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+													? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-semibold'
+													: 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
 											}`}>
 											<LessonIcon type={lesson.type} />
 											<span>{lesson.title}</span>
@@ -307,7 +307,7 @@ export const ThemeToggleButton = () => {
 			<button
 				onClick={toggleTheme}
 				className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-				{theme === "light" ? (
+				{theme === 'light' ? (
 					<MoonIcon className="h-6 w-6" />
 				) : (
 					<SunIcon className="h-6 w-6" />

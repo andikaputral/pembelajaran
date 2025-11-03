@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import courseData from "../data/mapel";
-import courseDetails from "../data/modules";
-import { Sidebar } from "../components/Sidebar";
-import { Content } from "../components/Content";
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import courseData from '../data/mapel';
+import courseDetails from '../data/modules';
+import { Sidebar } from '../components/Sidebar';
+import { Content } from '../components/Content';
 
 export default function ClassView() {
 	const { classId, moduleId, lessonId } = useParams();
@@ -22,18 +22,18 @@ export default function ClassView() {
 
 	useEffect(() => {
 		if (isSidebarOpen) {
-			document.body.classList.add("overflow-hidden");
+			document.body.classList.add('overflow-hidden');
 		} else {
-			document.body.classList.remove("overflow-hidden");
+			document.body.classList.remove('overflow-hidden');
 		}
 		return () => {
-			document.body.classList.remove("overflow-hidden");
+			document.body.classList.remove('overflow-hidden');
 		};
 	}, [isSidebarOpen]);
 
 	useEffect(() => {
 		if (course.disabled) {
-			navigate("/pembelajaran");
+			navigate('/pembelajaran');
 		} else if (course && !moduleId && !lessonId) {
 			const firstAvailableModule = course.modules.find((m) => !m.disabled);
 			if (firstAvailableModule && firstAvailableModule.lessons.length > 0) {
@@ -93,13 +93,21 @@ export default function ClassView() {
 		return null;
 	}
 
+	const handlePreventCopyCut = (e) => {
+		e.preventDefault();
+		console.log('Cannot copy/cut this content!');
+	};
+
 	return (
-		<div className="relative lg:flex min-h-screen">
+		<div
+			className="relative lg:flex min-h-screen"
+			onCopy={handlePreventCopyCut}
+			onCut={handlePreventCopyCut}>
 			<div className="static lg:sticky lg:top-0 w-full lg:w-lg lg:h-screen bg-gray-100 dark:bg-gray-800 shadow-md">
 				{/* Mobile Sidebar */}
 				<div
 					className={`fixed inset-y-0 z-20 w-3/4 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden ${
-						isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+						isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
 					}`}>
 					<Sidebar
 						course={course}

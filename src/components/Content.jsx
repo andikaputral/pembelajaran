@@ -3,9 +3,9 @@ import {
 	ArrowRightIcon,
 	Bars3Icon,
 	BookOpenIcon,
-} from "@heroicons/react/24/outline";
-import { memo } from "react";
-import { Link } from "react-router";
+} from '@heroicons/react/24/outline';
+import { memo } from 'react';
+import { Link } from 'react-router';
 
 export const Content = memo(
 	({ lesson, onNext, onPrev, isFirst, isLast, onMenuClick }) => {
@@ -13,7 +13,7 @@ export const Content = memo(
 			return (
 				<div className="flex flex-1 items-center justify-center text-center bg-white dark:bg-gray-900">
 					<Link
-						to={"/pembelajaran"}
+						to={'/pembelajaran'}
 						className="md:hidden fixed flex top-4 left-4 p-2.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 z-10 items-center gap-2 text-sm">
 						<ArrowLeftIcon className="size-5" /> Kembali
 					</Link>
@@ -35,7 +35,7 @@ export const Content = memo(
 		return (
 			<div className="relative flex flex-col w-full min-h-screen bg-white dark:bg-gray-900">
 				<Link
-					to={"/pembelajaran"}
+					to={'/pembelajaran'}
 					className="lg:hidden fixed flex top-4 left-4 p-2.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 z-10 items-center gap-2 text-sm">
 					<ArrowLeftIcon className="size-5" /> Kembali
 				</Link>
