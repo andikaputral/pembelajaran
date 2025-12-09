@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ChevronLeft } from 'lucide-react';
 import courseData from '../data/mapel';
 import courseDetails from '../data/modules';
-import { Sidebar } from '../components/Sidebar';
+import { Sidebar } from '../components/SideBar';
 import { Content } from '../components/Content';
 
 export default function ClassView() {
@@ -103,10 +103,10 @@ export default function ClassView() {
 			className="relative lg:flex min-h-screen"
 			onCopy={handlePreventCopyCut}
 			onCut={handlePreventCopyCut}>
-			<div className="static lg:sticky lg:top-0 w-full lg:w-lg lg:h-screen bg-gray-100 dark:bg-gray-800 shadow-md">
+			<div className="static lg:sticky lg:top-0 w-full lg:w-lg lg:h-screen bg-gray-100 dark:bg-slate-800 shadow-md">
 				{/* Mobile Sidebar */}
 				<div
-					className={`fixed inset-y-0 z-20 w-3/4 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden ${
+					className={`fixed inset-y-0 z-20 w-3/4 bg-white dark:bg-slate-800 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden ${
 						isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
 					}`}>
 					<Sidebar
@@ -124,12 +124,11 @@ export default function ClassView() {
 
 				{/* Desktop Sidebar */}
 				<div className="hidden lg:flex lg:shrink-0 flex-col">
-					<div className="p-4 border-b border-gray-200 dark:border-gray-700 shrink-0">
+					<div className="p-4 border-b border-gray-200 dark:border-slate-700 shrink-0">
 						<Link
 							to="/pembelajaran"
 							className="p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors w-full flex items-center justify-center text-sm">
-							<ArrowLeftIcon className="h-4 w-4 mr-2" /> Kembali ke Mata
-							Pelajaran
+							<ChevronLeft className="h-4 w-4 mr-2" /> Kembali ke Mata Pelajaran
 						</Link>
 					</div>
 					<Sidebar
