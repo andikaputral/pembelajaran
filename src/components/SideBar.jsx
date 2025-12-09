@@ -1,15 +1,16 @@
 import {
-	BookOpenIcon,
-	ChevronRightIcon,
-	CodeBracketIcon,
-	DocumentIcon,
-	DocumentTextIcon,
-	FilmIcon,
-	LockClosedIcon,
-	XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { useState, useEffect, memo } from "react";
-import { Link, useNavigate } from "react-router";
+	BookOpenText,
+	ChevronRight,
+	CircleQuestionMark,
+	Code,
+	File,
+	FileText,
+	Film,
+	Lock,
+	X,
+} from 'lucide-react';
+import { useState, useEffect, memo } from 'react';
+import { Link, useNavigate } from 'react-router';
 
 export const Sidebar = memo(
 	({ course, activeModuleId, activeLessonId, onClose }) => {
@@ -20,7 +21,7 @@ export const Sidebar = memo(
 			setOpenModuleId(activeModuleId);
 			window.scrollTo({
 				top: 0,
-				behavior: "smooth",
+				behavior: 'smooth',
 			});
 		}, [activeModuleId]);
 
@@ -33,25 +34,29 @@ export const Sidebar = memo(
 
 		const LessonIcon = ({ type }) => {
 			switch (type) {
-				case "video":
+				case 'video':
 					return (
-						<FilmIcon className="size-6 mr-3 text-indigo-600 dark:text-indigo-400" />
+						<Film className="size-5 mr-3 text-indigo-700 dark:text-sky-400" />
 					);
-				case "reading":
+				case 'reading':
 					return (
-						<BookOpenIcon className="size-5 mr-3 text-sky-700 dark:text-sky-400" />
+						<BookOpenText className="size-5 mr-3 text-indigo-700 dark:text-sky-400" />
 					);
-				case "text":
+				case 'text':
 					return (
-						<DocumentTextIcon className="size-5 mr-3 text-emerald-700 dark:text-emerald-400" />
+						<FileText className="size-5 mr-3 text-indigo-700 dark:text-sky-400" />
 					);
-				case "code":
+				case 'code':
 					return (
-						<CodeBracketIcon className="size-5 mr-3 text-slate-700 dark:text-slate-400" />
+						<Code className="size-5 mr-3 text-indigo-700 dark:text-sky-400" />
+					);
+				case 'quiz':
+					return (
+						<CircleQuestionMark className="size-5 mr-3 text-indigo-700 dark:text-sky-400" />
 					);
 				default:
 					return (
-						<DocumentIcon className="size-5 mr-3 text-gray-700 dark:text-gray-400" />
+						<File className="size-5 mr-3 text-gray-700 dark:text-gray-400" />
 					);
 			}
 		};
@@ -61,13 +66,13 @@ export const Sidebar = memo(
 				<div className="flex flex-row-reverse">
 					<button
 						onClick={onClose}
-						className="lg:hidden p-5 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
-						<XMarkIcon className="size-6" />
+						className="lg:hidden p-5 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
+						<X className="size-6" />
 					</button>
 				</div>
 
-				<aside className="flex-1 bg-gray-100 dark:bg-gray-800 pl-6 pr-3 pb-6 lg:p-6 shrink-0">
-					<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+				<aside className="flex-1 bg-slate-100 dark:bg-slate-800 pl-6 pr-3 pb-6 lg:p-6 shrink-0">
+					<h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
 						{course.title}
 					</h2>
 					<nav className="space-y-2">
@@ -78,18 +83,18 @@ export const Sidebar = memo(
 										!module.disabled && toggleModule(module.id);
 									}}
 									disabled={module.disabled}
-									className={`w-full flex items-center justify-between text-left font-semibold text-gray-700 dark:text-gray-200 p-3 rounded-lg ${
+									className={`w-full flex items-center justify-between text-left font-semibold text-slate-700 dark:text-slate-200 p-3 rounded-lg ${
 										module.disabled
-											? "opacity-50 cursor-not-allowed"
-											: "hover:bg-gray-200 dark:hover:bg-gray-700"
+											? 'opacity-50 cursor-not-allowed'
+											: 'hover:bg-slate-200 dark:hover:bg-slate-700'
 									}`}>
 									{module.title}
 									{module.disabled ? (
-										<LockClosedIcon className="h-5 w-5" />
+										<Lock className="h-5 w-5" />
 									) : (
-										<ChevronRightIcon
+										<ChevronRight
 											className={`h-5 w-5 transition-transform duration-300 ${
-												openModuleId === module.id ? "rotate-90" : ""
+												openModuleId === module.id ? 'rotate-90' : ''
 											}`}
 										/>
 									)}
@@ -97,10 +102,10 @@ export const Sidebar = memo(
 								<div
 									className={`transition-[max-height] duration-300 ease-in-out ${
 										openModuleId === module.id && !module.disabled
-											? "max-h-screen"
-											: "max-h-0 overflow-hidden"
+											? 'max-h-screen'
+											: 'max-h-0 overflow-hidden'
 									}`}>
-									<ul className="mt-2 ml-4 pl-2 md:pl-4 pr-4 md:pr-0 border-l-2 border-gray-200 dark:border-gray-600 space-y-1 py-1">
+									<ul className="mt-2 ml-4 pl-2 md:pl-4 pr-4 md:pr-0 border-l-2 border-slate-200 dark:border-slate-600 space-y-1 py-1">
 										{module.lessons.map((lesson) => (
 											<li key={lesson.id}>
 												<Link
@@ -108,8 +113,8 @@ export const Sidebar = memo(
 													onClick={onClose}
 													className={`flex items-center p-3 rounded-lg text-sm transition-transform ${
 														activeLessonId === lesson.id
-															? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-neutral-100 font-semibold translate-x-2"
-															: "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+															? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-neutral-100 font-semibold translate-x-2'
+															: 'text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
 													}`}>
 													<LessonIcon type={lesson.type} />
 													<span>{lesson.title}</span>

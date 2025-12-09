@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router";
-import courseDetails from "../data/modules";
-import { memo } from "react";
+import { useNavigate } from 'react-router';
+import courseDetails from '../data/modules';
+import { memo } from 'react';
 
 export const ClassCard = memo(({ course }) => {
 	const navigate = useNavigate();
@@ -22,17 +22,17 @@ export const ClassCard = memo(({ course }) => {
 	return (
 		<div
 			onClick={handleSelect}
-			className={`bg-neutral-50 dark:bg-gray-800 rounded-xl shadow-lg border-2 relative border-transparent ${
+			className={`bg-neutral-50 dark:bg-slate-800 rounded-xl shadow-lg border-2 relative border-transparent ${
 				course.disabled
-					? "cursor-not-allowed"
-					: "hover:shadow-xl cursor-pointer hover:border-indigo-400"
+					? 'cursor-not-allowed'
+					: 'hover:shadow-xl cursor-pointer hover:border-indigo-400'
 			}`}>
 			<img
 				loading="lazy"
 				src={course.image}
 				alt={course.title}
 				className={`w-full h-48 object-cover rounded-t-xl ${
-					course.disabled ? "opacity-50" : ""
+					course.disabled ? 'opacity-50' : ''
 				}`}
 				onError={(e) => {
 					e.target.onerror = null;
@@ -43,12 +43,12 @@ export const ClassCard = memo(({ course }) => {
 			/>
 			<div
 				className={`p-6 flex flex-col grow ${
-					course.disabled ? "opacity-50" : "opacity-100"
+					course.disabled ? 'opacity-50' : 'opacity-100'
 				}`}>
-				<h3 className="text-xl font-bold text-gray-800 dark:text-white">
+				<h3 className="text-xl font-bold text-slate-800 dark:text-white">
 					{course.title}
 				</h3>
-				<p className="text-gray-600 dark:text-gray-300 mt-2">
+				<p className="text-slate-600 dark:text-slate-300 mt-2">
 					{course.description}
 				</p>
 			</div>
