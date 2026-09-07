@@ -7,6 +7,6 @@ import { lesson5 } from './module1/lesson5';
 export const module1 = {
 	id: '1',
 	title: 'Perkembangan Dunia Kerja',
-	disabled: false,
+	disabled: true,
 	lessons: [lesson1, lesson2, lesson3, lesson4, lesson5],
 };
