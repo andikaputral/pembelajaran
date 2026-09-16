@@ -31,9 +31,7 @@ Please change the parent <Route path="${H}"> to <Route path="${H==="/"?"*":`${H}
 	&lt;/header&gt;
 	&lt;main&gt;
 		&lt;div class="content"&gt;
-			&lt;h2&gt;
-			Judul Konten
-			&lt;/h2&gt;
+			&lt;h2&gt;Judul Konten&lt;/h2&gt;
 			&lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga eaque quo veniam deleniti exercitationem quae, animi
 			molestias, dolore dolorem architecto similique possimus fugit esse? Illum reprehenderit expedita ad ipsum architecto ratione
 			culpa consequuntur a temporibus labore voluptatem corporis deserunt, dolore maiores consectetur iste magni hic asperiores
