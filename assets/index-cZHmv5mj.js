@@ -32,13 +32,7 @@ Please change the parent <Route path="${H}"> to <Route path="${H==="/"?"*":`${H}
 	&lt;main&gt;
 		&lt;div class="content"&gt;
 			&lt;h2&gt;Judul Konten&lt;/h2&gt;
-			&lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga eaque quo veniam deleniti exercitationem quae, animi
-			molestias, dolore dolorem architecto similique possimus fugit esse? Illum reprehenderit expedita ad ipsum architecto ratione
-			culpa consequuntur a temporibus labore voluptatem corporis deserunt, dolore maiores consectetur iste magni hic asperiores
-			tempore? Possimus qui temporibus nobis voluptatum sit dignissimos impedit eligendi quod est harum iusto optio repellat id
-			quam laborum, quis obcaecati similique pariatur ipsa debitis ratione ab tenetur	quaerat? Eius vero placeat nesciunt voluptatem
-			doloremque necessitatibus sed neque assumenda ut est nisi obcaecati, possimus rem, exercitationem ea ipsam minus laboriosam
-			iste optio? Atque, minus.&lt;/p&gt;
+			&lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit.&lt;/p&gt;
 		&lt;/div&gt;
 		&lt;aside&gt;
 			&lt;h3&gt;Konten Sidebar&lt;/h3&gt;
