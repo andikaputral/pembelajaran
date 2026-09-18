@@ -19,7 +19,7 @@ Please change the parent <Route path="${H}"> to <Route path="${H==="/"?"*":`${H}
 &lt;body&gt;
 	&lt;nav&gt;
 		&lt;div class="navbar-logo"&gt;MyWebsite&lt;/div&gt;
-		&lt;ul&gt;
+		&lt;ul class="navbar-links"&gt;
 			&lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
 			&lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
 			&lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
