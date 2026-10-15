@@ -126,13 +126,17 @@ header h1 {
 <pre><code>header {
 	padding: 200px;
 	text-align: center;
-	background-image: url(gambar3.jpg); /* pada url tulisan gambar3.jpg bisa disesuaikan dengan nama file gambar yang ada di folder */
+	background-image: url(gambar.jpg); /* silahkan download/simpan gambar dibawah kemudian pindah file tersebut pada satu folder */
 	background-size: cover;
 	background-position: center;
 	color: white;
 	font-size: 30px;
 }
 </code></pre>
+<figure class="flex flex-col items-center">
+	<img loading="lazy" src="/pembelajaran/img/gambar.jpg" alt="Gambar yang bisa disimpan." />
+	<figcaption class="text-sm">Silahkan simpan gambar diatas agar sesuai dengan hasil dibawah.</figcaption>
+</figure>
 <p>Maka header akan menjadi seperti ini: </p>
 <figure class="flex flex-col items-center">
 	<img loading="lazy" src="/pembelajaran/img/header-dengan-gambar.png" alt="Header dengan background gambar." />
